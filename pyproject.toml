@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "auth_system"
+version = "0.1.0"
+description = ""
+authors = ["kolanser <kolansers@yandex.ru>"]
+
+[tool.poetry.dependencies]
+python = "^3.14"
+django = "^5.0"
+djangorestframework = "^3.14"
+psycopg2-binary = "^2.9"
+django-environ = "^0.12.0"
+factory-boy = "^3.3.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "django-debug-toolbar (>=6.0.0,<7.0.0)",
+    "black (>=25.9.0,<26.0.0)",
+    "ruff (>=0.14.0,<0.15.0)"
+]
+
+[tool.black]
+line-length = 120          # Максимальная длина строки 120 символов
+target-version = ['py312'] # Для Python 3.12 (синтаксис, фичи)
+include = '\.pyi?$'        # Обрабатывать .py и .pyi файлы
+extend-exclude = '''
+/(
+  # directories
+  | \.eggs     # Игнорировать папки с зависимостями
+  | \.git      # Игнорировать Git папку
+  | \.venv     # Игнорировать виртуальное окружение
+  | build      # Игнорировать папку сборки
+  | dist       # Игнорировать папку дистрибутива
+)/
+'''
+
+[tool.ruff]
+line-length = 120          # Совместимость с Black
+target-version = "py314"   # Для Python 3.14
+select = [
+    "E",   # Ошибки стиля (PEP8) - отступы, пробелы и т.д.
+    "W",   # Предупреждения стиля
+    "F",   # Логические ошибки (неиспользуемые переменные)
+    "I",   # Сортировка импортов (isort)
+    "B",   # Поиск потенциальных багов
+    "UP",  # Авто-апгрейд синтаксиса до новой версии Python
+]
+ignore = ["E501", "B008"]  # Игнорировать:
+                           # E501 - длинные строки (Black сам решит)
+                           # B008 - не вызывать функции в аргументах по умолчанию
+fixable = ["ALL"]          # Автоисправлять ВСЕ исправимые ошибки
+unfixable = []             # Нет неисправимых ошибок
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]   # В __init__.py игнорировать "неиспользуемые импорты"
+"tests/**" = ["S101"]      # В тестах игнорировать "использование assert"

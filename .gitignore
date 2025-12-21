@@ -1,0 +1,18 @@
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Environments
+.env
+.venv
+
+# Ruff stuff:
+.ruff_cache/
+
+staticfiles/
+media/
+
+.devcontainer/
+.vscode/
