@@ -20,6 +20,8 @@ env = environ.Env(
     DATABASE_URL=(str, "postgres://user:pass@db/dbname"),
     ALLOWED_HOSTS=(list, ["localhost"]),
     CSRF_TRUSTED_ORIGINS=(list, []),
+    JWT_SECRET_KEY=(str, "your-jwt-secret"),
+    JWT_ACCESS_TOKEN_LIFETIME_MINUTES=(int, 15),
 )
 environ.Env.read_env()
 
@@ -48,6 +50,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "accounts",
 ]
 if DEBUG:
     INSTALLED_APPS += ["debug_toolbar"]
@@ -160,4 +164,20 @@ LOGGING = {
             if not app.startswith("django.")
         },
     },
+}
+
+AUTH_USER_MODEL = "accounts.User"
+
+# JWT Settings
+
+JWT_SECRET_KEY = env("JWT_SECRET_KEY")
+JWT_ACCESS_TOKEN_LIFETIME_MINUTES = env("JWT_ACCESS_TOKEN_LIFETIME_MINUTES")
+
+# DRF
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "auth_system.authentication.JWTAuthentication",
+    ],
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }
