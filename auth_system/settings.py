@@ -180,4 +180,7 @@ REST_FRAMEWORK = {
         "auth_system.authentication.JWTAuthentication",
     ],
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
 }

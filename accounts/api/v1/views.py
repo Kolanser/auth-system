@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, DestroyAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -42,7 +42,7 @@ class UserLogoutApiView(APIView):
         return Response({"message": "Успешный выход из системы"}, status=status.HTTP_200_OK)
 
 
-class UserProfileApiView(RetrieveUpdateAPIView):
+class UserProfileApiView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
@@ -51,11 +51,6 @@ class UserProfileApiView(RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
-
-
-class UserDeleteApiView(DestroyAPIView):
-    def get_object(self):
-        return self.request.user
 
     def perform_destroy(self, instance):
         instance.is_active = False

@@ -13,7 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def validate(self, data):
-        if data["password"] != data["password2"]:
+        password = data.get("password")
+        password2 = data.get("password2")
+        if password and (password != password2):
             raise serializers.ValidationError("Пароли не совпадают")
         return data
 
