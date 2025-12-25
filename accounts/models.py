@@ -2,6 +2,8 @@ import bcrypt
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
+from roles.models import Role
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -32,6 +34,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     is_staff = models.BooleanField(default=False, verbose_name="Персонал")
     date_joined = models.DateTimeField(auto_now_add=True, verbose_name="Дата регистрации")
+
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Роль пользователя")
 
     objects = UserManager()
 

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "accounts",
+    "roles",
 ]
 if DEBUG:
     INSTALLED_APPS += ["debug_toolbar"]
