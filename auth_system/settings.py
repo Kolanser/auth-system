@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "accounts",
     "roles",
+    "products",
 ]
 if DEBUG:
     INSTALLED_APPS += ["debug_toolbar"]

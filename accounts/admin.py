@@ -1,6 +1,6 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
 User = get_user_model()
 
@@ -37,11 +37,7 @@ class UserAdmin(DjangoUserAdmin):
         (
             "Права",
             {
-                "fields": (
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                ),
+                "fields": ("is_active", "is_staff", "is_superuser", "role"),
             },
         ),
     )

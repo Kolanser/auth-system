@@ -7,6 +7,7 @@ class Role(models.Model):
 
     name = models.CharField(max_length=100, unique=True, verbose_name="Название роли")
     description = models.TextField(blank=True, verbose_name="Описание")
+    is_admin = models.BooleanField(default=False, verbose_name="Администратор")
 
     class Meta:
         verbose_name = "Роль"

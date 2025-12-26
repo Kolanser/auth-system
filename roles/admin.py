@@ -10,7 +10,9 @@ class AccessRuleInline(admin.TabularInline):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "element":
-            kwargs["queryset"] = ContentType.objects.filter(app_label__in=["accounts", "roles"])
+            kwargs["queryset"] = ContentType.objects.filter(
+                app_label__in=["accounts", "roles", "products"], model__in=["user", "role", "product", "order"]
+            )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -29,5 +31,7 @@ class AccessRuleAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "element":
-            kwargs["queryset"] = ContentType.objects.filter(app_label__in=["accounts", "roles"])
+            kwargs["queryset"] = ContentType.objects.filter(
+                app_label__in=["accounts", "roles", "products"], model__in=["user", "role", "product", "order"]
+            )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
