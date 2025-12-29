@@ -1,14 +1,24 @@
 import factory
-from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
 
-User = get_user_model()
+from roles.models import AccessRule, Role
 
 
-class UserFactory(factory.django.DjangoModelFactory):
+class RoleFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = User
+        model = Role
 
-    last_name = factory.Faker("last_name")
-    first_name = factory.Faker("first_name")
-    email = factory.Faker("email")
-    password = factory.django.Password("pw")
+    name = factory.Faker("name")
+
+
+class ElementFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = ContentType
+
+
+class AccessRuleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = AccessRule
+
+    role = factory.SubFactory(RoleFactory)
+    element = factory.SubFactory(ElementFactory)
