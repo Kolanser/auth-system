@@ -1,14 +1,21 @@
 import factory
-from django.contrib.auth import get_user_model
 
-User = get_user_model()
+from accounts.api.v1.tests.factory import UserFactory
+from products.models import Order, Product
 
 
-class UserFactory(factory.django.DjangoModelFactory):
+class ProductFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = User
+        model = Product
 
-    last_name = factory.Faker("last_name")
-    first_name = factory.Faker("first_name")
-    email = factory.Faker("email")
-    password = factory.django.Password("pw")
+    name = factory.Faker("name")
+    price = factory.Faker("pydecimal", left_digits=5, right_digits=2, positive=True)
+
+
+class OrderFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Order
+
+    product = factory.SubFactory(ProductFactory)
+    quantity = factory.Faker("random_int", min=1, max=10)
+    user = factory.SubFactory(UserFactory)

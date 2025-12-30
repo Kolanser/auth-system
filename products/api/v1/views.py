@@ -26,9 +26,6 @@ class ProductViewSet(viewsets.ModelViewSet):
 
         return [permission() for permission in permission_classes]
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
