@@ -73,7 +73,6 @@ class UserProfileApiViewTest(APITestCase):
         token = generate_jwt(self.user)
         self.client.defaults["HTTP_AUTHORIZATION"] = f"Bearer {token}"
         response = self.client.delete(self.url)
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.user.refresh_from_db()
         self.assertEqual(self.user.is_active, False)
